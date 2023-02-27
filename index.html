@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Color Canvas on Page Load</title>
+</head>
+<body>
+<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-database.js"></script>
+
+  <canvas id="myCanvas" width="250" height="250"></canvas>
+  <script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set the canvas background color to a random color on page load.
+    ctx.fillStyle = getRandomColor();
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Generate a random color.
+    function getRandomColor() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      return `rgb(${r},${g},${b})`;
+
+    }
+   let dropdown =createSelect();
+dropdown.option('red-ish');
+dropdown.option('green-ish');
+dropdown.option('blue-ish');
+
+  </script>
+ <h1>Select a Color:</h1>
+<select name="color" id="color">
+  <option value="red">Red-ish</option>
+  <option value="blue">Blue-ish</option>
+  <option value="yellow">Yellow-isbh</option>
+  <option value="green">Green-ish</option>
+ <option value="orange">Orange-ish</option>
+ <option value="pink">Pink-ish</option>
+ <option value="black">Black-ish</option>
+ <option value="white">	White-ish</option>
+
+
+
+</select>
+  
+<button onclick="writeData()" type="sumbit" id="sumbit">Sumbit</button>
+
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+  apiKey: "AIzaSyBYHYdXnw7oEa8t4IYHQCSqRfYrjfo99vg",
+  authDomain: "color-detection-72379.firebaseapp.com",
+  projectId: "color-detection-72379",
+  storageBucket: "color-detection-72379.appspot.com",
+  messagingSenderId: "327354444630",
+  appId: "1:327354444630:web:54fa6aca1f038037e3c4f7",
+  measurementId: "G-V1G5JNLNQP"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Get a reference to the database service
+var database = firebase.database();
+</script>
+<script>
+function writeData() {
+  var selectedOption = document.getElementById("color").value;
+  database.ref('selectedOption').set(selectedOption);
+}
+</script>
+
+ 
+</body>
+<style>
+button:hover{
+border-color:blue;
+}
+</style>
+</html>
