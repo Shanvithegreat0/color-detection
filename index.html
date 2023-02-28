@@ -31,7 +31,9 @@ dropdown.option('blue-ish');
 
   </script>
  <h1>Select a Color:</h1>
-<select name="color" id="color">
+<form id="myForm">
+  <label for="dropdown">Select an option:</label>
+  <select id="dropdown" name="dropdown">
   <option value="red">Red-ish</option>
   <option value="blue">Blue-ish</option>
   <option value="yellow">Yellow-isbh</option>
@@ -40,13 +42,12 @@ dropdown.option('blue-ish');
  <option value="pink">Pink-ish</option>
  <option value="black">Black-ish</option>
  <option value="white">	White-ish</option>
-
-
-
 </select>
+<label for="input1">	Any guesses:</label>
+  <input type="text" id="input1" name="input1">
   
-<button onclick="writeData()" type="sumbit" id="sumbit">Sumbit</button>
-
+  <button type="submit">Submit</button>
+</form>
 <script>
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -63,12 +64,30 @@ firebase.initializeApp(firebaseConfig);
 
 // Get a reference to the database service
 var database = firebase.database();
-</script>
-<script>
-function writeData() {
-  var selectedOption = document.getElementById("color").value;
-  database.ref('selectedOption').set(selectedOption);
-}
+document.getElementById("myForm").addEventListener("submit", function(event) {
+  event.preventDefault(); // prevent form from submitting and reloading the page
+
+  // Get the values of the input fields
+  var dropdownValue = document.getElementById("dropdown").value;
+  var input1Value = document.getElementById("input1").value;
+
+  // Store the values in Firebase
+  database.ref("data").push({
+    dropdown: dropdownValue,
+    input1: input1Value
+  })
+  .then(function() {
+    // Display a success message to the user or reset the form for another submission
+    alert("Data stored successfully!");
+    document.getElementById("myForm").reset();
+  })
+  .catch(function(error) {
+    // Handle errors that occur while storing the data in Firebase
+    console.error(error);
+    alert("An error occurred while storing the data.");
+  });
+});
+
 </script>
 
  
